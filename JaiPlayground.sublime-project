@@ -2,7 +2,32 @@
 	"folders":
 	[
 		{
-			"path": "."
+			"path": ".",
+			"folder_exclude_patterns": [
+				".build/",
+				"_build/",
+				"modules/",
+				"core/.build/",
+				"core/_build/",
+			],
+			"file_exclude_patterns": [
+				"core/tests.jai",
+				"core/.gitignore",
+				"core/*.sublime-*",
+				"core/build.jai",
+				"core/build_config.jai",
+				"core/build.bat",
+			],
+		},
+		{
+			"name": "JaiModules (Fork)",
+			"path": "modules",
+			"folder_exclude_patterns": [
+				"Basic/examples",
+			],
+			"file_exclude_patterns": [
+				"Basic/copyrights.txt",
+			],
 		},
 		{
 			"name": "JaiModules",

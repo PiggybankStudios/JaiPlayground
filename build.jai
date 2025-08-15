@@ -38,16 +38,15 @@ build :: ()
 				}
 				appOps.output_executable_name = PROJECT_NAME_SAFE;
 				appOps.backend = ifx DEBUG_BUILD then .X64 else .LLVM;
-				// import_paths : [..]string;
-				// array_add(*import_paths, "modules");
-				// array_add(*import_paths, "core");
-				// for appOps.import_path array_add(*import_paths, it);
-				// appOps.import_path = import_paths;
 				set_optimization(*appOps, ifx DEBUG_BUILD then .DEBUG else .OPTIMIZED);
 				appOps.dead_code_elimination = .NONE;
 				appOps.text_output_flags = 0;
 				// appOps.text_output_flags |= .OUTPUT_LINK_LINE;
 				// appOps.text_output_flags |= .OUTPUT_TIMING_INFO;
+				importDirs : [..]string;
+				array_add(*importDirs, "core/");
+				for appOps.import_path { array_add(*importDirs, it); }
+				appOps.import_path = importDirs;
 			}
 			set_build_options(appOps, app);
 			

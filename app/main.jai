@@ -1,8 +1,10 @@
 
-#import "Basic";
 #import,file "../build_config.jai";
-#import,dir "../core/core_base";
-#import,dir "../core/core_struct";
+
+#import "Basic";
+
+#import "core_base";
+#import "core_struct";
 
 main :: ()
 {

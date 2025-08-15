@@ -1,3 +1,3 @@
-build/
+_build/
 *.sublime-workspace
 core/

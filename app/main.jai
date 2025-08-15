@@ -1,7 +1,9 @@
 
 #import "Basic";
 
+#load "helpers.jai";
+
 main :: ()
 {
-	print("Hello from the app!\n");
+	print_stdout_and_debugger("Hello from the app!\n");
 }

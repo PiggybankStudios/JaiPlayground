@@ -8,12 +8,10 @@
 			"name": "JaiModules",
 			"path": "F:\\Programs\\jai\\modules",
 			"folder_include_patterns": [
-				"Basic",
 				"Compiler",
 				"Math",
 			],
 			"file_include_patterns": [
-				"Basic/*",
 				"Compiler/*",
 				"Math/*",
 				"Preload.jai",

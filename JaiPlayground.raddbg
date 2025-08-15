@@ -1,2 +1,41 @@
 // raddbg 0.9.21 project file
 
+recent_file: path: "app/main.jai"
+recent_file: path: "F:/Programs/jai/modules/Basic/Print.jai"
+recent_file: path: "app/helpers.jai"
+target:
+{
+  executable: "_build/JaiPlayground.exe"
+  working_directory: "_build/"
+  enabled: 1
+}
+type_view:
+{
+  type: Vector2_F32
+  expr: "rows($, $.X, $.Y)"
+}
+type_view:
+{
+  type: Vector2_F64
+  expr: "rows($, $.X, $.Y)"
+}
+type_view:
+{
+  type: Vector2_S32
+  expr: "rows($, $.X, $.Y)"
+}
+type_view:
+{
+  type: Vector2_S64
+  expr: "rows($, $.X, $.Y)"
+}
+breakpoint:
+{
+  source_location: "app/main.jai:14:1"
+  hit_count: 1
+}
+type_view:
+{
+  type: "Vector2_OfType(T=float32)"
+  expr: "rows($, $.X, $.Y)"
+}

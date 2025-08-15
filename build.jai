@@ -4,18 +4,14 @@
 #import "String";
 #import "File";
 #import "File_Utilities";
+#import "Process";
 
-DEBUG_BUILD   :: true;
-BUILD_WINDOWS :: true;
-BUILD_LINUX   :: false;
-BUILD_OSX     :: false;
-
-PROJECT_NAME :: "Jai Playground";
-PROJECT_NAME_SAFE :: "JaiPlayground";
+#import,file "build_config.jai";
+#import,dir "core/core_base";
 
 build :: ()
 {
-	print("Building...\n");
+	writeline_i("Building...");
 	
 	for targetOS: enum_values_as_enum(Operating_System_Tag)
 	{
@@ -42,6 +38,11 @@ build :: ()
 				}
 				appOps.output_executable_name = PROJECT_NAME_SAFE;
 				appOps.backend = ifx DEBUG_BUILD then .X64 else .LLVM;
+				// import_paths : [..]string;
+				// array_add(*import_paths, "modules");
+				// array_add(*import_paths, "core");
+				// for appOps.import_path array_add(*import_paths, it);
+				// appOps.import_path = import_paths;
 				set_optimization(*appOps, ifx DEBUG_BUILD then .DEBUG else .OPTIMIZED);
 				appOps.dead_code_elimination = .NONE;
 				appOps.text_output_flags = 0;
@@ -50,7 +51,41 @@ build :: ()
 			}
 			set_build_options(appOps, app);
 			
+			if (RUN_APP && targetOS == OS) { compiler_begin_intercept(app); }
+			
 			add_build_file("app/main.jai", app);
+			
+			if (RUN_APP && targetOS == OS)
+			{
+				while (true)
+				{
+					message := compiler_wait_for_message();
+					if (message.kind == .COMPLETE)
+					{
+						//TODO: For some reason if we don't do capture_and_return_output then the output of the program displayed BEFORE the output of our build script which is confusing
+						exeName := sprint("%1%2", PROJECT_NAME_SAFE, ifx (targetOS == .WINDOWS) then ".exe" else "");
+						exePath := sprint("_build/%", exeName);
+						printline_r("Running %...", exeName);
+						writeline_r("");
+						result, output := run_command(exePath, capture_and_return_output=true);
+						printline_r("%", output);
+						if (result.type != .EXITED)
+						{
+							printline_e("% %", exeName, result.type);
+						}
+						else if (result.exit_code != 0)
+						{
+							printline_e("% Exited with Code %", exeName, result.exit_code);
+						}
+						else
+						{
+							writeline_i("Done!");
+						}
+						break;
+					}
+				}
+				compiler_end_intercept(app);
+			}
 		}
 	}
 	
